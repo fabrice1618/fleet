@@ -1,0 +1,64 @@
+.head-admin {
+    background-color: #F4A807;
+    margin-bottom: 40px;
+}
+
+.logo-info {
+    padding-left: 13px;
+    padding-top: 13px;
+}
+
+.logo-image-admin {
+	width:200px;
+	height:29px;
+}
+
+.admin-text {
+    color:white;
+    font-family:Calibri;
+    font-size: 20px;
+    margin-left: 2px;
+}
+
+.bouton {
+    padding:10px;
+    align-items: flex-end;	
+	margin-left:auto;		
+	margin-right:20px;
+}
+
+.btn-light {
+    background-color: #F4A807;
+    color: white;
+    font-weight: bold;
+    border-color:white;
+    border-width: 2px;
+}
+
+.btn-light:hover {
+    background-color: white;
+    color: #F4A807;
+    border-color: #F4A807;
+}
+
+/* TABLE DESIGN */
+
+table {
+	border-collapse: collapse;
+	width:100%;
+    MARGIN-TOP:11px; 
+}
+
+th, td {
+  text-align: center;
+  padding: 15px;
+}
+
+tr:nth-child(even) {
+    background-color: #F7E4CA
+}
+
+th {
+    background-color: #F4A807;
+    color: white;
+}
