@@ -1,3 +1,12 @@
+<?php
+require_once("errorlog.php");
+
+// Variable globale
+// Connexion Base de données
+$bdd = null;
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>

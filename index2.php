@@ -1,3 +1,12 @@
+<?php
+require_once("errorlog.php");
+
+// Variable globale
+// Connexion Base de données
+$bdd = null;
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -144,13 +153,7 @@
             </br>
             <select class="form-control" name="met_name">
                 <option>--Select Methode--</option>
-                <?php foreach ($res_met as $output_met) { ?>
-                  <?php if($methode == $output_met["met_name"]) { ?>
-                    <option selected="selected"><?php echo $output_met["met_name"]; ?></option>
-                  <?php } else { ?>
-                    <option><?php echo $output_met["met_name"]; ?></option>
-                    <?php } ?>
-                  <?php } ?>
+                <?php selectMetNameView($res_met) ?>
             </select>
             
           </div>
@@ -161,8 +164,7 @@
           <div class="form-group">
             <label>Active</label>
             <div>
-              <input type="radio" id="yes_no" name="opt_active" value="1"> Yes</input>
-              <input type="radio" id="no_yes" name="opt_active" value="0"> No</input>
+            <?php selectActiveView($active); ?>
             </div>
           </div>
           <div class="form-group">
@@ -272,3 +274,34 @@
     </div>
   </body>
 </html>
+
+<?php 
+function selectMetNameView($res_met)
+{
+  global $methode;
+
+  foreach ($res_met as $output_met) { 
+    if ($methode == $output_met["met_name"]) {
+      echo '<option value="'.$output_met["met_name"].'" selected>'.$output_met["met_name"].'</option>'.PHP_EOL;
+    } else {
+      echo '<option value="'.$output_met["met_name"].'">'.$output_met["met_name"].'</option>'.PHP_EOL;
+    }
+  }
+
+}
+
+function selectActiveView($opt_active)
+{
+  $sSelect1 = "";
+  $sSelect2 = "";
+
+  if ($opt_active == "1") {
+    $sSelect1 = "checked";
+  } else {
+    $sSelect2 = "checked";
+  }
+
+  echo '<input type="radio" id="yes_no" name="opt_active" value="1" '.$sSelect1.'><label for="yes_no">Yes</label>'.PHP_EOL;
+  echo '<input type="radio" id="no_yes" name="opt_active" value="0" '.$sSelect2.'><label for="no_yes">No</label>'.PHP_EOL;
+
+}
