@@ -1,1 +1,2 @@
-2020-05-30 16:05:45 SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '' for column 'off_date_debut' at row 1
+2020-05-31 07:05:15 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))
+2020-05-31 07:43:52 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))

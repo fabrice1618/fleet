@@ -1,8 +1,24 @@
 <?php 
 
-function logError( $sMessage )
+// Ecris les messages sur la console quand on execute le script en CLI
+// Si la constante n'est pas définie, le message d'erreur est envoié dans le fichier seulement
+//define('DEBUG_TO_SCREEN', 'ON');
+
+
+function errorlog( $sMessageLog )
 {
-    $fp = fopen( "app-error.log", "a");
-    fwrite($fp, date("Y-m-d H:m:s ").$sMessage .PHP_EOL);
-    fclose($fp);
+    // Envoi le message dans le fichier app-error.log
+    $fp = fopen( "app-error.log", "a" );
+    fwrite( $fp, $sMessageLog );
+    fclose( $fp );
+
+    // Envoi le message sur la console quand la constante est definie
+    if ( defined('DEBUG_TO_SCREEN') ) {
+        echo( $sMessageLog );
+    }
+}
+
+function errorMessage( $sFunction, $sMessage )
+{
+    return( date("Y-m-d H:i:s") . " ". $sFunction . "(): " . $sMessage . PHP_EOL );
 }

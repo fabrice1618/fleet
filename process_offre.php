@@ -19,7 +19,7 @@ openDatabase();
 if (isset($_POST['save'])) {
 
     // https://www.php.net/manual/en/migration70.new-features.php
-
+    $aOffre = array();
     $aOffre['off_id'] = $_POST['off_id'] ?? "";
     $aOffre['off_designation'] = $_POST['off_designation'] ?? "";
     $aOffre['off_descriptif'] = $_POST['off_descriptif'] ?? "";
@@ -44,9 +44,9 @@ $date_debut = '';
 $date_fin = '';
 
 if (isset($_GET['edit'])) {
-    $off_id = $_GET['edit'];
+    $off_id_origin = $_GET['edit'];
     $update = true;
-    $sth = readOffre( $off_id );
+    $sth = readOffre( $off_id_origin );
 
     $off_id = $sth['off_id'];
     $designation = $sth['off_designation'];
@@ -59,13 +59,15 @@ if (isset($_GET['edit'])) {
 // UPDATE // 
 
 if (isset($_POST['update'])) {
-    $aOffre['off_id'] = $_POST['off_id'] ?? "";
-    $aOffre['off_designation'] = htmlentities($_POST['off_designation']) ?? "";
-    $aOffre['off_descriptif'] = htmlentities($_POST['off_descriptif']) ?? "";
+    $nOffIDOrigin = htmlentities( $_POST['off_id_origin'] ) ?? "";
+    $aOffre = array();
+    $aOffre['off_id'] = htmlentities( $_POST['off_id'] ) ?? "";
+    $aOffre['off_designation'] = htmlentities( $_POST['off_designation'] ) ?? "";
+    $aOffre['off_descriptif'] = htmlentities( $_POST['off_descriptif'] ) ?? "";
     $aOffre['off_date_debut'] = $_POST['off_date_debut'] ?? "";
     $aOffre['off_date_fin'] = $_POST['off_date_fin'] ?? "";
 
-    updateOffre( $aOffre );
+    updateOffre( $nOffIDOrigin, $aOffre );
 
     header('location:index.php');
 

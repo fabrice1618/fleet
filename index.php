@@ -114,6 +114,12 @@ $bdd = null;
 
       <div class="row justify-content-center"> 
         <form action="process_offre.php" method="POST">      
+<?php          
+  if ($update) {
+    echo('<input type="hidden" name="off_id_origin" value="'.$off_id_origin.'">');
+  }
+?>          
+
           <div class="form-group">
             <label>Off_id</label>
             <input type="text" name="off_id" class="form-control" value="<?php echo $off_id; ?>" placeholder="entrer l'id">

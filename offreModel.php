@@ -22,7 +22,6 @@ function insertOffre( $aOffre )
     } catch (PDOException $erreur) {
     //        echo $erreur."--".$erreur->getMessage();
             logError( $erreur->getMessage() );
-            header('location:index.php');
         }
     
 
@@ -45,13 +44,13 @@ function readOffre( $off_id )
    return($aData);
 }
 
-function updateOffre( $aOffre )
+function updateOffre( $nIdOrigin, $aOffre )
 {
     global $bdd;
 
     $sQuery = " UPDATE fiche_offre 
                 SET off_id= :off_id, off_designation = :off_designation, off_descriptif = :off_descriptif, off_date_debut = :off_date_debut, off_date_fin = :off_date_fin
-                WHERE off_id = :off_id";
+                WHERE off_id = :off_id_orig";
 
     // Executer la requete
     try{
@@ -61,14 +60,11 @@ function updateOffre( $aOffre )
         $stmt1->bindValue(':off_descriptif', $aOffre['off_descriptif'], PDO::PARAM_STR);
         $stmt1->bindValue(':off_date_debut', $aOffre['off_date_debut'], PDO::PARAM_STR);
         $stmt1->bindValue(':off_date_fin', $aOffre['off_date_fin'], PDO::PARAM_STR);
-//        $stmt1->bindValue(':off_id', $aOffre['off_id'], PDO::PARAM_STR);
-        if ( $stmt1->execute() ) {
-            // Requete OK
-       }
+        $stmt1->bindValue(':off_id_orig', $nIdOrigin, PDO::PARAM_STR);
+        $stmt1->execute();
+        
     } catch (PDOException $erreur) {
-//        echo $erreur."--".$erreur->getMessage();
-        logError( $erreur->getMessage() );
-        header('location:index.php');
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
     }
 
 }
