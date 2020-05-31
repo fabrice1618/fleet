@@ -7,14 +7,19 @@ function insertOption( $aOption )
     $sQuery = "INSERT INTO fiche_option (off_id, met_name, opt_field, opt_active) VALUES ( :off_id, :met_name, :opt_field, :opt_active)";
 
     // Executer la requete
-    $stmt1 = $bdd->prepare( $sQuery );
-    $stmt1->bindValue(':off_id', $aOption['off_id'], PDO::PARAM_STR);
-    $stmt1->bindValue(':met_name', $aOption['met_name'], PDO::PARAM_STR);
-    $stmt1->bindValue(':opt_field', $aOption['opt_field'], PDO::PARAM_STR);
-    $stmt1->bindValue(':opt_active', $aOption['opt_active'], PDO::PARAM_INT);
-    if ( $stmt1->execute() ) {
+    try {
+        $stmt1 = $bdd->prepare( $sQuery );
+        $stmt1->bindValue(':off_id', $aOption['off_id'], PDO::PARAM_STR);
+        $stmt1->bindValue(':met_name', $aOption['met_name'], PDO::PARAM_STR);
+        $stmt1->bindValue(':opt_field', $aOption['opt_field'], PDO::PARAM_STR);
+        $stmt1->bindValue(':opt_active', $aOption['opt_active'], PDO::PARAM_INT);
+        if ( $stmt1->execute() ) {
         // Requete OK
-   }
+        }
+    } catch (PDOException $erreur) {
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+    }
+    
 
 }
 
@@ -44,16 +49,19 @@ function updateOption( $aOption )
                 WHERE opt_id = :opt_id";
 
     // Executer la requete
-    $stmt1 = $bdd->prepare( $sQuery );
-    $stmt1->bindValue(':off_id', $aOption['off_id'], PDO::PARAM_STR);
-    $stmt1->bindValue(':met_name', $aOption['met_name'], PDO::PARAM_STR);
-    $stmt1->bindValue(':opt_field', $aOption['opt_field'], PDO::PARAM_STR);
-    $stmt1->bindValue(':opt_active', $aOption['opt_active'], PDO::PARAM_INT);
-    $stmt1->bindValue(':opt_id', $aOption['opt_id'], PDO::PARAM_INT);
-    if ( $stmt1->execute() ) {
+    try {
+        $stmt1 = $bdd->prepare( $sQuery );
+        $stmt1->bindValue(':off_id', $aOption['off_id'], PDO::PARAM_STR);
+        $stmt1->bindValue(':met_name', $aOption['met_name'], PDO::PARAM_STR);
+        $stmt1->bindValue(':opt_field', $aOption['opt_field'], PDO::PARAM_STR);
+        $stmt1->bindValue(':opt_active', $aOption['opt_active'], PDO::PARAM_INT);
+        $stmt1->bindValue(':opt_id', $aOption['opt_id'], PDO::PARAM_INT);
+        if ( $stmt1->execute() ) {
         // Requete OK
-   }
-
+        }
+    } catch (PDOException $erreur) {
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+    }
 }
 
 
