@@ -2,6 +2,7 @@
 require_once("errorlog.php");
 require_once("process_option.php");
 require_once('offreModel.php');
+require_once('auth.php');
 
 if(!isset($_SESSION)){
   session_start();
@@ -19,7 +20,11 @@ $methode = '';
 $field = '';
 $active = '';
 
-if (isset($_POST['save'])) {
+if (
+    isset( $_POST['save'] ) &&
+    isset( $_POST['token'] ) && 
+    checkToken( $_POST['token'] )
+) {
   saveProcessOption();
 }
 
@@ -27,11 +32,19 @@ if (isset($_GET['edit'])) {
   editProcessOption();
 }
 
-if (isset($_POST['update'])) {
+if ( 
+    isset( $_POST['update'] ) &&
+    isset( $_POST['token'] ) && 
+    checkToken( $_POST['token'] )
+) {
   updateProcessOption();
 }
 
-if (isset($_GET['delete'])) {
+if (
+    isset( $_GET['delete'] ) && 
+    isset( $_GET['token'] ) && 
+    checkToken( $_GET['token'] )
+) {
   deleteProcessOption();
 }
 
@@ -39,6 +52,8 @@ if (isset($_GET['delete'])) {
 $result = indexOption();
 $res_met=indexMethode();
 $res_off=indexOffre();
+
+$sToken = newToken();     // Generer un nouveau token CSRF
 
 ?>
 
@@ -119,12 +134,15 @@ $res_off=indexOffre();
             ?>
 
             <tr> 
-              <td><?=$value['off_designation'];?></td>
-              <td><?=$value['met_name'];?></td>
-              <td><?=$value['opt_field'];?></td>
-              <td><?=$value['opt_active'];?></td>
-              <td><a href="index2.php?delete=<?php echo $value['opt_id']; ?>" class="btn btn-danger">Delete</a>
-                  <a href="index2.php?edit=<?php echo $value['opt_id']; ?>" class="btn btn-info" >Edit</a>
+              <td><?php echo $value['off_designation'];?></td>
+              <td><?php echo $value['met_name'];?></td>
+              <td><?php echo $value['opt_field'];?></td>
+              <td><?php echo $value['opt_active'];?></td>
+              <?php
+              $sDeleteLink = 'index2.php?delete='.$value['opt_id'].'&token='.$sToken;
+              ?>
+              <td><a href="<?php echo $sDeleteLink; ?>" class="btn btn-danger">Delete</a>
+                  <a href="index2.php?edit=<?php echo $value['opt_id']; ?>#upd"   class="btn btn-info">Edit</a>
               </td>
             </tr>
 
@@ -162,6 +180,11 @@ $res_off=indexOffre();
       
       <div class="row justify-content-center"> 
         <form action="index2.php" method="POST">
+
+      <?php          
+      echo('<input type="hidden" name="token" value="'.$sToken.'">');
+      ?>
+
           <div class="form-group" style="display:none">
             <label>opt_id</label>
             <input type="text" name="opt_id" class="form-control" value="<?php echo $opt_id; ?>" placeholder="entrer l'id">
@@ -333,3 +356,6 @@ function selectActiveView($opt_active)
   echo '<input type="radio" id="no_yes" name="opt_active" value="0" '.$sSelect2.'><label for="no_yes">No</label>'.PHP_EOL;
 
 }
+
+closeDatabase();
+

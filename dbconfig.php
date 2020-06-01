@@ -1,7 +1,7 @@
 <?php
 // CONNEXION BDD //
 
-define( 'SERVERNAME', "localhost:3306");
+define( 'SERVERNAME', "localhost:3308");
 define( 'DBNAME', "fleet");
 define( 'USERNAME', "root");
 define( 'PASSWORD', "");
