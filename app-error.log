@@ -9,3 +9,9 @@
 2020-05-31 08:56:32 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`) ON DELETE RESTRICT ON UPDATE RESTRICT)
 2020-05-31 09:14:45 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000103' pour la clef 'PRIMARY'
 2020-05-31 09:15:14 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`) ON DELETE RESTRICT ON UPDATE RESTRICT)
+2020-06-01 08:30:43 insertOffre(): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '' for column 'off_date_debut' at row 1
+2020-06-01 08:31:19 insertOffre(): SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '' for column 'off_date_debut' at row 1
+2020-06-01 08:58:49 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'tuti' pour la clef 'PRIMARY'
+2020-06-01 09:10:14 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'titi' pour la clef 'PRIMARY'
+2020-06-01 09:33:08 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'toto' pour la clef 'PRIMARY'
+2020-06-01 09:35:20 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))

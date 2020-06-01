@@ -3,47 +3,31 @@
     require_once('dbconfig.php');
     require_once("errorlog.php");
 
-
 // https://openclassrooms.com/fr/courses/2091901-protegez-vous-efficacement-contre-les-failles-web/2680167-la-faille-xss
 
-
-if(!isset($_SESSION)){
-    session_start();
+function saveProcessOffre()
+{
+        // https://www.php.net/manual/en/migration70.new-features.php
+        $aOffre = array();
+        $aOffre['off_id'] = htmlentities( $_POST['off_id'] ) ?? "";
+        $aOffre['off_designation'] = htmlentities( $_POST['off_designation'] ) ?? "";
+        $aOffre['off_descriptif'] = htmlentities( $_POST['off_descriptif'] ) ?? "";
+        $aOffre['off_date_debut'] = $_POST['off_date_debut'] ?? "";
+        $aOffre['off_date_fin'] = $_POST['off_date_fin'] ?? "";
+    
+        try {
+            insertOffre($aOffre);
+            setAlert( 'success', "Votre offre à été insérée");
+        } catch ( Exception $erreur) {
+            setAlert( 'danger', "Une erreur s'est produite");
+        }
+    
 }
 
-
-openDatabase();
-
-// CREATE //
-
-if (isset($_POST['save'])) {
-
-    // https://www.php.net/manual/en/migration70.new-features.php
-    $aOffre = array();
-    $aOffre['off_id'] = htmlentities( $_POST['off_id'] ) ?? "";
-    $aOffre['off_designation'] = htmlentities( $_POST['off_designation'] ) ?? "";
-    $aOffre['off_descriptif'] = htmlentities( $_POST['off_descriptif'] ) ?? "";
-    $aOffre['off_date_debut'] = $_POST['off_date_debut'] ?? "";
-    $aOffre['off_date_fin'] = $_POST['off_date_fin'] ?? "";
-
-    insertOffre($aOffre);
-
-    header('location:index.php');
-}
-
-// EXTEND AND READ //
-$result = indexOffre();
-
-// DECLARATION DE VARIABLE (update) //
-
-$update = false; 
-$off_id = '';
-$designation = '';
-$descriptif = '';
-$date_debut = '';
-$date_fin = '';
-
-if (isset($_GET['edit'])) {
+function editProcessOffre()
+{
+    global $update, $off_id_origin, $off_id, $designation, $descriptif, $date_debut, $date_fin;
+    
     $off_id_origin = $_GET['edit'];
     $update = true;
     $sth = readOffre( $off_id_origin );
@@ -53,12 +37,10 @@ if (isset($_GET['edit'])) {
     $descriptif = $sth['off_descriptif'];
     $date_debut = $sth['off_date_debut'];
     $date_fin = $sth['off_date_fin'];   
-     
 }
 
-// UPDATE // 
-
-if (isset($_POST['update'])) {
+function updateProcessOffre()
+{
     $nOffIDOrigin = htmlentities( $_POST['off_id_origin'] ) ?? "";
     $aOffre = array();
     $aOffre['off_id'] = htmlentities( $_POST['off_id'] ) ?? "";
@@ -67,28 +49,24 @@ if (isset($_POST['update'])) {
     $aOffre['off_date_debut'] = $_POST['off_date_debut'] ?? "";
     $aOffre['off_date_fin'] = $_POST['off_date_fin'] ?? "";
 
-    updateOffre( $nOffIDOrigin, $aOffre );
-
-    header('location:index.php');
-
+    try {
+        updateOffre( $nOffIDOrigin, $aOffre );
+        setAlert( 'success', "Votre offre à été modifiée");
+    } catch ( Exception $erreur) {
+        setAlert( 'danger', "Une erreur s'est produite");
+    }
 }
 
-// RETOUR EDIT //
-
-if (isset($_POST['annule'])) {
-
-    header('location:index.php');
-}
-
-// DELETE //
-
-if (isset($_GET['delete'])) {
+function deleteProcessOffre()
+{
     $off_id = $_GET['delete'];
 
-    deleteOffre( $off_id );
-    
-    header('location:index.php');
-    
+    try {
+        deleteOffre( $off_id );
+        setAlert( 'success', "Votre offre à été modifiée");
+    } catch ( Exception $erreur) {
+        setAlert( 'danger', "Une erreur s'est produite");
+    }
+
 }
 
-closeDatabase();

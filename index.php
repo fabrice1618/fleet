@@ -1,9 +1,43 @@
 <?php
 require_once("errorlog.php");
+require_once("process_offre.php");
+
+if(!isset($_SESSION)){
+  session_start();
+}
 
 // Variable globale
 // Connexion Base de données
 $bdd = null;
+openDatabase();
+
+$aAlert = [ 'type' => 'none', 'message' => '' ];
+$update = false; 
+$off_id_origin = '';
+$off_id = '';
+$designation = '';
+$descriptif = '';
+$date_debut = '';
+$date_fin = '';
+
+if (isset($_POST['save'])) {
+  saveProcessOffre();
+}
+
+if (isset($_GET['edit'])) {
+  editProcessOffre();
+}
+
+if (isset($_POST['update'])) {
+  updateProcessOffre();
+}
+
+if (isset($_GET['delete'])) {
+  deleteProcessOffre();
+}
+
+// Lecture des données à afficher dans la table
+$result = indexOffre();
 
 ?>
 
@@ -22,9 +56,6 @@ $bdd = null;
     <title>Offre Haulotte</title>
   </head>
 
-
-  
-
   <body>
     <div class="container-fluid">
       <div class="row head-admin"> 
@@ -41,7 +72,10 @@ $bdd = null;
     </div>
 
     <?php 
-      require_once 'process_offre.php';
+      if ( $aAlert['type'] !== 'none' ) {
+        $sAlertType = 'alert-' . $aAlert['type'];
+        echo('<div class="alert '.$sAlertType.' container" role="alert">'.$aAlert['message'].'</div>');
+      }
     ?>
 
     <div class="container">
@@ -72,15 +106,13 @@ $bdd = null;
             ?>
 
             <tr> 
-              <td><?=$value['off_id'];?></td>
-              <td><?=$value['off_designation'];?></td>
-              <td><?=$value['off_descriptif'];?></td>
-              <td><?=$value['off_date_debut'];?></td>
-              <td><?=$value['off_date_fin'];?></td>
-              <td><a onclick="myFunction()" href="process_offre.php?delete=<?php echo $value['off_id']; ?>"
-                     class="btn btn-danger">Delete</a>
-                  <a href="index.php?edit=<?php echo $value['off_id']; ?>"
-                     class="btn btn-info">Edit</a>
+              <td><?php echo $value['off_id'];?></td>
+              <td><?php echo $value['off_designation'];?></td>
+              <td><?php echo $value['off_descriptif'];?></td>
+              <td><?php echo $value['off_date_debut'];?></td>
+              <td><?php echo $value['off_date_fin'];?></td>
+              <td><a href="index.php?delete=<?php echo $value['off_id']; ?>" class="btn btn-danger">Delete</a>
+                  <a href="index.php?edit=<?php echo $value['off_id']; ?>#upd"   class="btn btn-info">Edit</a>
               </td>
             </tr>
 
@@ -113,7 +145,8 @@ $bdd = null;
       ?>
 
       <div class="row justify-content-center"> 
-        <form action="process_offre.php" method="POST">      
+        <form action="index.php" method="POST">      
+
 <?php          
   if ($update) {
     echo('<input type="hidden" name="off_id_origin" value="'.$off_id_origin.'">');
@@ -146,14 +179,14 @@ $bdd = null;
               if ($update == true):
             ?>
 
-            <button onclick="myFunction1()" type="submit"  class="btn btn-light" name="update">modifier</button>
+            <button type="submit"  class="btn btn-light" name="update">modifier</button>
             <button type="submit"  class="btn btn-danger" name="annule">Annuler</button>
 
             <?php 
               else: 
             ?>
 
-            <button onclick="myFunction2()"type="submit"  class="btn btn-light" name="save">enregistrer</button>
+            <button type="submit"  class="btn btn-light" name="save">enregistrer</button>
 
             <?php 
               endif; 
@@ -169,19 +202,10 @@ $bdd = null;
     <script src="JavaScript/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script> 
     
-    <script>
-    function myFunction() {
-      alert("Offre supprimé");
-    }
-    function myFunction1() {
-      alert("Offre modifié");
-    }  
-      function myFunction2() {
-      alert("Offre enregistré");
-    }
-    </script>
-
   </div>
 
   </body>
 </html>
+
+<?php
+closeDatabase();

@@ -16,11 +16,10 @@ function insertOffre( $aOffre )
         $stmt1->bindValue(':off_descriptif', $aOffre['off_descriptif'], PDO::PARAM_STR);
         $stmt1->bindValue(':off_date_debut', $aOffre['off_date_debut'], PDO::PARAM_STR);
         $stmt1->bindValue(':off_date_fin', $aOffre['off_date_fin'], PDO::PARAM_STR);
-        if ( $stmt1->execute() ) {
-            // Requete OK
-       } 
+        $stmt1->execute();
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+        throw new Exception("Erreur insertion", 1);        
     }
 
 }
@@ -29,15 +28,22 @@ function readOffre( $off_id )
 {
     global $bdd;
 
+    $aData = array();
+
     $sQuery = "SELECT * FROM fiche_offre WHERE off_id = :off_id LIMIT 1";
 
     // Executer la requete
-    $stmt1 = $bdd->prepare( $sQuery );
-    $stmt1->bindValue(':off_id', $off_id, PDO::PARAM_STR);
-
-    if ( $stmt1->execute() ) {
-        $aData = $stmt1->fetch(PDO::FETCH_ASSOC);
-   }
+    try {
+        $stmt1 = $bdd->prepare( $sQuery );
+        $stmt1->bindValue(':off_id', $off_id, PDO::PARAM_STR);
+    
+        if ( $stmt1->execute() ) {
+            $aData = $stmt1->fetch(PDO::FETCH_ASSOC);
+       }
+    } catch (PDOException $erreur) {
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+        throw new Exception("Erreur insertion", 1);        
+    }
 
    return($aData);
 }
@@ -63,6 +69,7 @@ function updateOffre( $nIdOrigin, $aOffre )
 
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+        throw new Exception("Erreur insertion", 1);        
     }
 
 }
@@ -74,11 +81,14 @@ function deleteOffre( $off_id )
     $sQuery = " DELETE FROM fiche_offre WHERE off_id = :off_id";
 
     // Executer la requete
-    $stmt1 = $bdd->prepare( $sQuery );
-    $stmt1->bindValue(':off_id', $off_id, PDO::PARAM_STR);
-    if ( $stmt1->execute() ) {
-        // Requete OK
-   }
+    try{
+        $stmt1 = $bdd->prepare( $sQuery );
+        $stmt1->bindValue(':off_id', $off_id, PDO::PARAM_STR);
+        $stmt1->execute();
+    } catch (PDOException $erreur) {
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+        throw new Exception("Erreur insertion", 1);        
+    }
 
 }
 
@@ -86,10 +96,20 @@ function indexOffre()
 {
     global $bdd;
 
-    $sth = $bdd->query("SELECT * FROM fiche_offre");
-    $sth->execute();
+    $aReturn = array();
+
+    // Executer la requete
+    try{
+        $sth = $bdd->query("SELECT * FROM fiche_offre");
+        $sth->execute();
+        $aReturn = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $erreur) {
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+        throw new Exception("Erreur insertion", 1);        
+    }
           
-    return( $sth->fetchAll(PDO::FETCH_ASSOC) );
+    return( $aReturn );
 }
 
 

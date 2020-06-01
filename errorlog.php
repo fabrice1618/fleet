@@ -22,3 +22,10 @@ function errorMessage( $sFunction, $sMessage )
 {
     return( date("Y-m-d H:i:s") . " ". $sFunction . "(): " . $sMessage . PHP_EOL );
 }
+
+function setAlert( $sType, $sMessage)
+{
+    global $aAlert;
+
+    $aAlert = [ 'type' => $sType, 'message' => $sMessage ];
+}
