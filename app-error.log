@@ -15,3 +15,7 @@
 2020-06-01 09:10:14 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'titi' pour la clef 'PRIMARY'
 2020-06-01 09:33:08 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'toto' pour la clef 'PRIMARY'
 2020-06-01 09:35:20 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))
+2020-06-01 13:25:17 insertOption(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000103-bla -dsfdghj' pour la clef 'off_id'
+2020-06-01 13:28:46 updateOption(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000101-bla -hufdtf' pour la clef 'off_id'
+2020-06-01 13:33:29 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000101' pour la clef 'PRIMARY'
+2020-06-01 13:34:21 insertOption(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000101-blabla-retr' pour la clef 'off_id'

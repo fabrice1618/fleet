@@ -17,7 +17,7 @@ function saveProcessOffre()
     
         try {
             insertOffre($aOffre);
-            setAlert( 'success', "Votre offre à été insérée");
+            setAlert( 'success', "Votre offre à été ajoutée");
         } catch ( Exception $erreur) {
             setAlert( 'danger', "Une erreur s'est produite");
         }
@@ -63,7 +63,7 @@ function deleteProcessOffre()
 
     try {
         deleteOffre( $off_id );
-        setAlert( 'success', "Votre offre à été modifiée");
+        setAlert( 'success', "Votre offre à été supprimé");
     } catch ( Exception $erreur) {
         setAlert( 'danger', "Une erreur s'est produite");
     }

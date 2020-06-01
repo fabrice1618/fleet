@@ -1,9 +1,43 @@
 <?php
 require_once("errorlog.php");
+require_once("process_option.php");
+
+if(!isset($_SESSION)){
+  session_start();
+}
 
 // Variable globale
 // Connexion Base de données
 $bdd = null;
+openDatabase();
+
+$aAlert = [ 'type' => 'none', 'message' => '' ];
+$update = false;
+$off_id = '';
+$methode = '';
+$field = '';
+$active = '';
+
+if (isset($_POST['save'])) {
+  saveProcessOption();
+}
+
+if (isset($_GET['edit'])) {
+  editProcessOption();
+}
+
+if (isset($_POST['update'])) {
+  updateProcessOption();
+}
+
+if (isset($_GET['delete'])) {
+  deleteProcessOption();
+}
+
+
+$result = indexOption();
+$res_met=indexMethode();
+$res_off=indexOffre();
 
 ?>
 
@@ -42,8 +76,11 @@ $bdd = null;
     </div>
         
     <?php 
-      require_once 'process_option.php';
-    ?>   
+      if ( $aAlert['type'] !== 'none' ) {
+        $sAlertType = 'alert-' . $aAlert['type'];
+        echo('<div class="alert '.$sAlertType.' container" role="alert">'.$aAlert['message'].'</div>');
+      }
+    ?>
         
     <div class="container">
 
@@ -89,7 +126,7 @@ $bdd = null;
               <td><?=$value['met_name'];?></td>
               <td><?=$value['opt_field'];?></td>
               <td><?=$value['opt_active'];?></td>
-              <td><a onclick="myFunction()" href="process_option.php?delete=<?php echo $value['opt_id']; ?>"
+              <td><a href="index2.php?delete=<?php echo $value['opt_id']; ?>"
                     class="btn btn-danger">Delete</a>
                   <a href="index2.php?edit=<?php echo $value['opt_id']; ?>"
                     class="btn btn-info" >Edit</a>
@@ -129,7 +166,7 @@ $bdd = null;
         ?>
       
       <div class="row justify-content-center"> 
-        <form action="process_option.php" method="POST">
+        <form action="index2.php" method="POST">
           <div class="form-group" style="display:none">
             <label>opt_id</label>
             <input type="text" name="opt_id" class="form-control" value="<?php echo $opt_id; ?>" placeholder="entrer l'id">
@@ -188,19 +225,6 @@ $bdd = null;
     <script src="JavaScript/jquery.min.js"></script>
     <script src="JavaScript/ddtf.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script> 
-
-    <!-- POP-UP -->
-    <script>
-      function myFunction() {
-        alert("Option supprimé");
-      }
-      function myFunction1() {
-        alert("Option modifié");
-      }  
-        function myFunction2() {
-        alert("Option enregistré");
-      }
-    </script>
 
       <!-- filtre tableau -->
 
