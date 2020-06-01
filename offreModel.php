@@ -62,7 +62,7 @@ function updateOffre( $nIdOrigin, $aOffre )
         $stmt1->bindValue(':off_date_fin', $aOffre['off_date_fin'], PDO::PARAM_STR);
         $stmt1->bindValue(':off_id_orig', $nIdOrigin, PDO::PARAM_STR);
         $stmt1->execute();
-        
+
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
     }
@@ -97,16 +97,4 @@ function indexOffre()
     return( $sth->fetchAll(PDO::FETCH_ASSOC) );
 }
 
-/*
-$sql_off = "SELECT * FROM fiche_offre";
-
-try {
-    $stmt = $bdd->prepare($sql_off);
-    $stmt->execute();
-    $res_off=$stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $erreur) {
-    echo $erreur."--".$erreur->getMessage();
-}
-*/
 
