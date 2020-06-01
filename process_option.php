@@ -16,7 +16,7 @@ openDatabase();
 if (isset($_POST['save'])) {
     $aOption['off_id'] = $_POST['off_id'] ?? "";
     $aOption['met_name'] = $_POST['met_name'] ?? "";
-    $aOption['opt_field'] = $_POST['opt_field'] ?? "";
+    $aOption['opt_field'] = htmlentities( $_POST['opt_field'] ) ?? "";
     $aOption['opt_active'] = $_POST['opt_active'] ?? "";
 
     insertOption( $aOption );
@@ -52,7 +52,7 @@ if (isset($_POST['update'])) {
     $aOption['opt_id'] = $_POST['opt_id'] ?? "";
     $aOption['off_id'] = $_POST['off_id'] ?? "";
     $aOption['met_name'] = $_POST['met_name'] ?? "";
-    $aOption['opt_field'] = $_POST['opt_field'] ?? "";
+    $aOption['opt_field'] = htmlentities( $_POST['opt_field'] ) ?? "";
     $aOption['opt_active'] = $_POST['opt_active'] ?? "";
 
     updateOption( $aOption );

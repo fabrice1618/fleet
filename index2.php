@@ -136,21 +136,15 @@ $bdd = null;
           </div>
           <div class="form-group">
             <label>Offres</label>
-            </br>
+            <br/>
             <select class="form-control" name="off_id">
                 <option>--Select Offres--</option>
-                <?php foreach ($res_off as $output_off) { ?>
-                  <?php if($off_id == $output_off["off_id"]) { ?>
-                  <option selected ="selected" value="<?php echo $output_off["off_id"] ?>"><?php echo $output_off["off_designation"]; ?></option>
-                <?php } else { ?>
-                  <option value="<?php echo $output_off["off_id"] ?>"><?php echo $output_off["off_designation"]; ?></option>
-                  <?php } ?>
-                  <?php } ?>
+                <?php selectOffreView($res_off) ?>
             </select>
           </div>
           <div class="form-group">
             <label>Methode</label>
-            </br>
+            <br/>
             <select class="form-control" name="met_name">
                 <option>--Select Methode--</option>
                 <?php selectMetNameView($res_met) ?>
@@ -276,6 +270,21 @@ $bdd = null;
 </html>
 
 <?php 
+
+function selectOffreView($res_off)
+{
+  global $off_id;
+
+  foreach ($res_off as $output_off) { 
+    if ($off_id == $output_off["off_id"]) {
+      echo '<option value="'.$output_off["off_id"].'" selected>'.$output_off["off_designation"].'</option>'.PHP_EOL;
+    } else {
+      echo '<option value="'.$output_off["off_id"].'">'.$output_off["off_designation"].'</option>'.PHP_EOL;
+    }
+  }
+
+}
+
 function selectMetNameView($res_met)
 {
   global $methode;

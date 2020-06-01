@@ -20,9 +20,9 @@ if (isset($_POST['save'])) {
 
     // https://www.php.net/manual/en/migration70.new-features.php
     $aOffre = array();
-    $aOffre['off_id'] = $_POST['off_id'] ?? "";
-    $aOffre['off_designation'] = $_POST['off_designation'] ?? "";
-    $aOffre['off_descriptif'] = $_POST['off_descriptif'] ?? "";
+    $aOffre['off_id'] = htmlentities( $_POST['off_id'] ) ?? "";
+    $aOffre['off_designation'] = htmlentities( $_POST['off_designation'] ) ?? "";
+    $aOffre['off_descriptif'] = htmlentities( $_POST['off_descriptif'] ) ?? "";
     $aOffre['off_date_debut'] = $_POST['off_date_debut'] ?? "";
     $aOffre['off_date_fin'] = $_POST['off_date_fin'] ?? "";
 

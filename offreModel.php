@@ -20,10 +20,8 @@ function insertOffre( $aOffre )
             // Requete OK
        } 
     } catch (PDOException $erreur) {
-    //        echo $erreur."--".$erreur->getMessage();
-            logError( $erreur->getMessage() );
-        }
-    
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+    }
 
 }
 
@@ -68,9 +66,6 @@ function updateOffre( $nIdOrigin, $aOffre )
     }
 
 }
-
-
-
 
 function deleteOffre( $off_id )
 {
