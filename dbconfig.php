@@ -1,7 +1,7 @@
 <?php
 // CONNEXION BDD //
 
-define( 'SERVERNAME', "localhost:3308");
+define( 'SERVERNAME', "localhost:3306");
 define( 'DBNAME', "fleet");
 define( 'USERNAME', "root");
 define( 'PASSWORD', "");
@@ -16,7 +16,8 @@ function openDatabase()
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     } catch(PDOException $erreur) {
-        echo $erreur."--".$erreur->getMessage();
+        errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
+        throw new Exception("Erreur de connexion a la base de donnees", 1);        
     }
    
 }

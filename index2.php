@@ -1,6 +1,7 @@
 <?php
 require_once("errorlog.php");
 require_once("process_option.php");
+require_once('offreModel.php');
 
 if(!isset($_SESSION)){
   session_start();
@@ -52,19 +53,15 @@ $res_off=indexOffre();
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/option.css">
-
     
     <title>Options Haulotte</title>
   </head>
-
-  
-
   <body>
   
     <div class="container-fluid">
       <div class="row head-admin"> 
 			  <div class="logo-info">
-			    <img src="./img/HaulotteRVB.png" class="logo-image-admin">
+			    <a href="/index2.php"><img src="./img/HaulotteRVB.png" class="logo-image-admin"></a>
           <span class="admin-text"> Admin </span>   
         </div>
         <div class="bouton"> 
@@ -126,10 +123,8 @@ $res_off=indexOffre();
               <td><?=$value['met_name'];?></td>
               <td><?=$value['opt_field'];?></td>
               <td><?=$value['opt_active'];?></td>
-              <td><a href="index2.php?delete=<?php echo $value['opt_id']; ?>"
-                    class="btn btn-danger">Delete</a>
-                  <a href="index2.php?edit=<?php echo $value['opt_id']; ?>"
-                    class="btn btn-info" >Edit</a>
+              <td><a href="index2.php?delete=<?php echo $value['opt_id']; ?>" class="btn btn-danger">Delete</a>
+                  <a href="index2.php?edit=<?php echo $value['opt_id']; ?>" class="btn btn-info" >Edit</a>
               </td>
             </tr>
 
@@ -204,14 +199,14 @@ $res_off=indexOffre();
               if ($update == true):
             ?>
 
-            <button onclick="myFunction1()" type="submit"  class="btn btn-light" name="update">Modifier</button>
+            <button type="submit"  class="btn btn-light" name="update">Modifier</button>
             <button type="submit"  class="btn btn-danger" name="annule">Annuler</button>
 
             <?php 
               else:
             ?>
 
-            <button onclick="myFunction2()" type="submit"  class="btn btn-light" name="save">Enregistrer</button>
+            <button type="submit"  class="btn btn-light" name="save">Enregistrer</button>
 
             <?php 
               endif; 

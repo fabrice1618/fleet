@@ -19,3 +19,9 @@
 2020-06-01 13:28:46 updateOption(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000101-bla -hufdtf' pour la clef 'off_id'
 2020-06-01 13:33:29 insertOffre(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000101' pour la clef 'PRIMARY'
 2020-06-01 13:34:21 insertOption(): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicata du champ 'HR000101-blabla-retr' pour la clef 'off_id'
+2020-06-01 15:09:58 openDatabase(): SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée.
+
+2020-06-01 15:18:18 deleteOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))
+2020-06-01 15:20:36 deleteOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))
+2020-06-01 15:34:36 deleteOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))
+2020-06-01 15:34:53 updateOffre(): SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`fleet`.`fiche_option`, CONSTRAINT `fk_off_id` FOREIGN KEY (`off_id`) REFERENCES `fiche_offre` (`off_id`))

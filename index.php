@@ -1,6 +1,7 @@
 <?php
 require_once("errorlog.php");
 require_once("process_offre.php");
+require_once('auth.php');
 
 if(!isset($_SESSION)){
   session_start();
@@ -20,7 +21,11 @@ $descriptif = '';
 $date_debut = '';
 $date_fin = '';
 
-if (isset($_POST['save'])) {
+if ( 
+  isset( $_POST['save'] ) &&
+  isset( $_POST['token'] ) && 
+  checkToken($_POST['token'])
+) {
   saveProcessOffre();
 }
 
@@ -28,16 +33,26 @@ if (isset($_GET['edit'])) {
   editProcessOffre();
 }
 
-if (isset($_POST['update'])) {
+if ( 
+  isset($_POST['update']) &&
+  isset( $_POST['token'] ) && 
+  checkToken($_POST['token'])
+  ) {
   updateProcessOffre();
 }
 
-if (isset($_GET['delete'])) {
+if (
+  isset( $_GET['delete'] ) && 
+  isset( $_GET['token'] ) && 
+  checkToken($_GET['token'])
+  ) {
   deleteProcessOffre();
 }
 
 // Lecture des données à afficher dans la table
 $result = indexOffre();
+
+$sToken = newToken();     // Generer un nouveau token CSRF
 
 ?>
 
@@ -60,7 +75,7 @@ $result = indexOffre();
     <div class="container-fluid">
       <div class="row head-admin"> 
 			  <div class="logo-info">
-			    <img src="./img/HaulotteRVB.png" class="logo-image-admin">
+        <a href="/index.php"><img src="./img/HaulotteRVB.png" class="logo-image-admin"></a>
           <span class="admin-text"> Admin </span>   
         </div>
         <div class="bouton"> 
@@ -111,7 +126,10 @@ $result = indexOffre();
               <td><?php echo $value['off_descriptif'];?></td>
               <td><?php echo $value['off_date_debut'];?></td>
               <td><?php echo $value['off_date_fin'];?></td>
-              <td><a href="index.php?delete=<?php echo $value['off_id']; ?>" class="btn btn-danger">Delete</a>
+              <?php
+              $sDeleteLink = 'index.php?delete='.$value['off_id'].'&token='.$sToken;
+              ?>
+              <td><a href="<?php echo $sDeleteLink; ?>" class="btn btn-danger">Delete</a>
                   <a href="index.php?edit=<?php echo $value['off_id']; ?>#upd"   class="btn btn-info">Edit</a>
               </td>
             </tr>
@@ -146,7 +164,9 @@ $result = indexOffre();
 
       <div class="row justify-content-center"> 
         <form action="index.php" method="POST">      
-
+<?php          
+  echo('<input type="hidden" name="token" value="'.$sToken.'">');
+?>          
 <?php          
   if ($update) {
     echo('<input type="hidden" name="off_id_origin" value="'.$off_id_origin.'">');
