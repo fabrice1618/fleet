@@ -29,3 +29,17 @@ function setAlert( $sType, $sMessage)
 
     $aAlert = [ 'type' => $sType, 'message' => $sMessage ];
 }
+
+function getAlertMessage()
+{
+    global $aAlert;
+
+	$sMessage = "";
+      if ( $aAlert['type'] !== 'none' ) {
+
+        $sAlertType = 'alert-' . $aAlert['type'];
+        $sMessage = '<div class="alert '.$sAlertType.' container" role="alert">'.$aAlert['message'].'</div>';
+      }
+      
+	return( $sMessage );
+}

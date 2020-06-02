@@ -40,7 +40,7 @@ function readOption( $opt_id )
         }
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur affichage", 1);        
     }
 
    return($aData);
@@ -67,7 +67,7 @@ function updateOption( $aOption )
         }
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur modification", 1);        
     }
 }
 
@@ -85,7 +85,7 @@ function deleteOption( $opt_id )
         $stmt1->execute();
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur suppression", 1);        
     }
 
 }
@@ -104,7 +104,7 @@ function indexOption()
         $aReturn = $sth->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur affichage", 1);        
     }
     
     return( $aReturn );
@@ -122,7 +122,7 @@ function indexMethode()
         $aReturn = $sth->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur affichage", 1);        
     }
     
     return( $aReturn );

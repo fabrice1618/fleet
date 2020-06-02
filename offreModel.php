@@ -42,7 +42,7 @@ function readOffre( $off_id )
        }
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur affichage", 1);        
     }
 
    return($aData);
@@ -69,7 +69,7 @@ function updateOffre( $nIdOrigin, $aOffre )
 
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur modification", 1);        
     }
 
 }
@@ -87,7 +87,7 @@ function deleteOffre( $off_id )
         $stmt1->execute();
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur suppression", 1);        
     }
 
 }
@@ -106,7 +106,7 @@ function indexOffre()
 
     } catch (PDOException $erreur) {
         errorlog( errorMessage( __FUNCTION__, $erreur->getMessage() ) );
-        throw new Exception("Erreur insertion", 1);        
+        throw new Exception("Erreur affichage", 1);        
     }
           
     return( $aReturn );

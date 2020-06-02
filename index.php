@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
 $bdd = null;
 openDatabase();
 
-$aAlert = [ 'type' => 'none', 'message' => '' ];
+setAlert( 'none', '' );
 $update = false; 
 $off_id_origin = '';
 $off_id = '';
@@ -87,10 +87,7 @@ $sToken = newToken();     // Generer un nouveau token CSRF
     </div>
 
     <?php 
-      if ( $aAlert['type'] !== 'none' ) {
-        $sAlertType = 'alert-' . $aAlert['type'];
-        echo('<div class="alert '.$sAlertType.' container" role="alert">'.$aAlert['message'].'</div>');
-      }
+      echo getAlertMessage();
     ?>
 
     <div class="container">
